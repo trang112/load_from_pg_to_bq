@@ -1,0 +1,1 @@
+"""Extract from PG and load to BQ"""
