@@ -51,6 +51,7 @@ def extract_pg():
                 rows = [dict(r) for r in cur.fetchall()]
                 data[table] = rows
                 logger.info("✅ Đã lấy xong %d dòng từ bảng %s.\n", len(rows),table)
+                
             #Bước 2: câu lệnh SQL dùng để lấy schema của tất cả các cột trong các bảng:
             cur.execute("""
                 SELECT table_name, column_name, data_type
@@ -58,13 +59,6 @@ def extract_pg():
                 WHERE table_schema = 'public'
                 ORDER BY table_name, ordinal_position
             """)
-            #get table schema from PG: 
-            cur.execute("""
-                    SELECT table_name, column_name, data_type
-                    FROM information_schema.columns
-                    WHERE table_schema = 'public'
-                    ORDER BY table_name, ordinal_position
-                """)
             schemas = {}
             for r in cur.fetchall():
                 logger.info("Đang lấy schemas từ bảng: %s...",r["table_name"])
